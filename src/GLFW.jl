@@ -3,7 +3,7 @@ __precompile__()
 module GLFW
 
 include("compat.jl")
-if isfile("../deps/deps.jl")
+if isfile(joinpath(@__DIR__, "..", "deps", "deps.jl"))
 	include("../deps/deps.jl")
 else
 	error("GLFW wasn't build. Please run Pkg.build(\"GLFW\")")
