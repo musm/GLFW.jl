@@ -3,7 +3,11 @@ __precompile__()
 module GLFW
 
 include("compat.jl")
-include("../deps/deps.jl")
+if isfile("../deps/deps.jl")
+	include("../deps/deps.jl")
+else
+	error("GLFW wasn't build. Please run Pkg.build(\"GLFW\")")
+end
 
 function GetVersion()
 	major, minor, rev = Ref{Cint}(), Ref{Cint}(), Ref{Cint}()
@@ -27,7 +31,7 @@ end
 
 function __init__()
 	initialized = false
-
+	check_deps()
 	# Save errors that occur during initialization
 	errors = Vector{Exception}()
 	SetErrorCallback(err -> push!(errors, err))
